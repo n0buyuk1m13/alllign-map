@@ -114,7 +114,6 @@ window.initMap = function() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 35.65487, lng: 139.74498},
     zoom: 16,
-    styles: styles,
     disableDefaultUI: false,
     zoomControl: true,
     mapTypeControl: false,
@@ -123,6 +122,8 @@ window.initMap = function() {
     gestureHandling: 'cooperative',
     tilt: 45
   });
+
+  map.setOptions({styles: styles});
 
   var pinIcon = {
     path: google.maps.SymbolPath.CIRCLE,
@@ -152,6 +153,6 @@ window.initMap = function() {
   marker.addListener('click', function() { infoWindow.open(map, marker); });
 };
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap&v=weekly" async defer></script>
 </body>
 </html>
