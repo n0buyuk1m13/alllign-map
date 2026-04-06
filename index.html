@@ -6,30 +6,18 @@
 <title>alllign partners - Map</title>
 <style>
 html, body, #map {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
 }
 .gm-style .gm-style-iw-c {
   border-radius: 8px !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
 }
-.gm-style .gm-style-iw-d {
-  overflow: hidden !important;
-}
+.gm-style .gm-style-iw-d { overflow: hidden !important; }
 .info-window {
   font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-  font-size: 13px;
-  padding: 4px 8px;
-  line-height: 1.7;
-  color: #333;
+  font-size: 13px; padding: 4px 8px; line-height: 1.7; color: #333;
 }
-.info-window strong {
-  font-size: 14px;
-  color: #222;
-}
+.info-window strong { font-size: 14px; color: #222; }
 </style>
 </head>
 <body>
@@ -37,27 +25,38 @@ html, body, #map {
 <script>
 window.initMap = function() {
   var styles = [
+    // Admin: desaturated, province borders hidden, labels off
     {featureType: 'administrative', elementType: 'all', stylers: [{saturation: -100}]},
     {featureType: 'administrative.province', elementType: 'all', stylers: [{visibility: 'off'}]},
     {featureType: 'administrative', elementType: 'labels', stylers: [{visibility: 'off'}]},
+    // Landscape: LIGHTEST layer - pale warm grey
     {featureType: 'landscape', elementType: 'all', stylers: [{saturation: -100}, {lightness: 35}]},
     {featureType: 'landscape.man_made', elementType: 'geometry.fill', stylers: [{color: '#f2f1ef'}]},
     {featureType: 'landscape.man_made', elementType: 'geometry.stroke', stylers: [{color: '#d5d3cf'}]},
     {featureType: 'landscape.man_made', elementType: 'labels', stylers: [{visibility: 'off'}]},
-    {featureType: 'landscape.natural.landcover', elementType: 'geometry.fill', stylers: [{color: '#b8c99a'}]},
-    {featureType: 'landscape.natural.terrain', elementType: 'geometry.fill', stylers: [{color: '#c5d4a8'}]},
+    {featureType: 'landscape.natural.landcover', elementType: 'geometry.fill', stylers: [{color: '#b3c48f'}]},
+    {featureType: 'landscape.natural.terrain', elementType: 'geometry.fill', stylers: [{color: '#b3c48f'}]},
+    // POI: parks and cemetery unified green, building labels ON, park labels ON
     {featureType: 'poi', elementType: 'labels', stylers: [{visibility: 'off'}]},
     {featureType: 'poi.attraction', elementType: 'geometry.fill', stylers: [{color: '#eae8e4'}]},
     {featureType: 'poi.business', elementType: 'geometry.fill', stylers: [{color: '#eae8e4'}]},
+    {featureType: 'poi.business', elementType: 'labels', stylers: [{visibility: 'on'}]},
+    {featureType: 'poi.business', elementType: 'labels.text.fill', stylers: [{color: '#8a8a8a'}]},
+    {featureType: 'poi.business', elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}, {weight: 3}]},
     {featureType: 'poi.government', elementType: 'geometry.fill', stylers: [{color: '#eae8e4'}]},
     {featureType: 'poi.medical', elementType: 'geometry.fill', stylers: [{color: '#eae8e4'}]},
     {featureType: 'poi.park', elementType: 'geometry.fill', stylers: [{color: '#b3c48f'}]},
+    {featureType: 'poi.park', elementType: 'labels', stylers: [{visibility: 'on'}]},
+    {featureType: 'poi.park', elementType: 'labels.text.fill', stylers: [{color: '#6a7d4e'}]},
+    {featureType: 'poi.park', elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}, {weight: 3}]},
     {featureType: 'poi.place_of_worship', elementType: 'geometry.fill', stylers: [{color: '#eae8e4'}]},
     {featureType: 'poi.school', elementType: 'geometry.fill', stylers: [{color: '#e5e3df'}]},
-    {featureType: 'poi.sports_complex', elementType: 'geometry.fill', stylers: [{color: '#c5d4a8'}]},
+    {featureType: 'poi.sports_complex', elementType: 'geometry.fill', stylers: [{color: '#b3c48f'}]},
+    // Roads: DARKER than land, direction arrows very light, road names light grey
     {featureType: 'road', elementType: 'all', stylers: [{saturation: -100}]},
-    {featureType: 'road', elementType: 'labels.text.fill', stylers: [{color: '#7a7a7a'}]},
-    {featureType: 'road', elementType: 'labels.icon', stylers: [{visibility: 'on'}]},
+    {featureType: 'road', elementType: 'labels.text.fill', stylers: [{color: '#d8d8d8'}]},
+    {featureType: 'road', elementType: 'labels.text.stroke', stylers: [{color: '#f2f1ef'}, {weight: 3}]},
+    {featureType: 'road', elementType: 'labels.icon', stylers: [{saturation: -100}, {lightness: 30}]},
     {featureType: 'road.local', elementType: 'geometry.fill', stylers: [{color: '#e0deda'}]},
     {featureType: 'road.local', elementType: 'geometry.stroke', stylers: [{color: '#d0ceca'}, {visibility: 'on'}]},
     {featureType: 'road.arterial', elementType: 'geometry.fill', stylers: [{color: '#d5d3cf'}]},
@@ -65,39 +64,60 @@ window.initMap = function() {
     {featureType: 'road.highway', elementType: 'geometry.fill', stylers: [{color: '#c5c3bf'}]},
     {featureType: 'road.highway', elementType: 'geometry.stroke', stylers: [{color: '#b5b3af'}, {visibility: 'on'}]},
     {featureType: 'road.highway', elementType: 'all', stylers: [{visibility: 'simplified'}]},
+    // Transit: rail lines prominent dark grey
     {featureType: 'transit', elementType: 'all', stylers: [{saturation: -100}, {visibility: 'simplified'}]},
     {featureType: 'transit', elementType: 'labels.icon', stylers: [{visibility: 'on'}]},
     {featureType: 'transit.station.rail', elementType: 'labels.text', stylers: [{visibility: 'on'}]},
     {featureType: 'transit.station.rail', elementType: 'labels.text.fill', stylers: [{color: '#505050'}]},
     {featureType: 'transit.station.rail', elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}, {weight: 4}]},
     {featureType: 'transit.station.bus', elementType: 'all', stylers: [{visibility: 'off'}]},
-    {featureType: 'transit.line', elementType: 'geometry', stylers: [{color: '#b8b6b2'}]},
+    {featureType: 'transit.line', elementType: 'geometry', stylers: [{color: '#3a3a3a'}, {weight: 2}]},
+    // Water
     {featureType: 'water', elementType: 'geometry', stylers: [{color: '#b0ada6'}]},
     {featureType: 'water', elementType: 'labels', stylers: [{visibility: 'off'}]}
   ];
-  var position = {lat: 35.6580725, lng: 139.7434576};
+
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: position, zoom: 16,
-    mapTypeControl: false, streetViewControl: false,
-    fullscreenControl: false, zoomControl: true,
-    gestureHandling: 'greedy', styles: styles
+    center: {lat: 35.65487, lng: 139.74498},
+    zoom: 16,
+    styles: styles,
+    disableDefaultUI: false,
+    zoomControl: true,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    gestureHandling: 'cooperative',
+    tilt: 45
   });
-  var pinSvg = 'data:image/svg+xml,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36">' +
-    '<path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="#E89B00"/>' +
-    '<circle cx="12" cy="12" r="4" fill="#fff"/></svg>'
-  );
+
+  var pinIcon = {
+    path: google.maps.SymbolPath.CIRCLE,
+    fillColor: '#7BA428',
+    fillOpacity: 1,
+    strokeColor: '#5a7a1c',
+    strokeWeight: 2,
+    scale: 10
+  };
+
   var marker = new google.maps.Marker({
-    position: position, map: map, title: 'alllign partners',
-    icon: {url: pinSvg, scaledSize: new google.maps.Size(36, 54), anchor: new google.maps.Point(18, 54)}
+    position: {lat: 35.65487, lng: 139.74498},
+    map: map,
+    icon: pinIcon,
+    title: 'alllign partners'
   });
-  var infoWindow = new google.maps.InfoWindow({
-    content: '<div class="info-window"><strong>\u30A2\u30E9\u30A4\u30F3 \u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</strong><br>\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>THE WORKERS &amp; CO 904</div>'
-  });
-  marker.addListener('click', function(){infoWindow.open(map, marker)});
-  infoWindow.open(map, marker);
+
+  var infoContent = '<div class="info-window">' +
+    '<strong>alllign partners Inc.</strong><br>' +
+    '\u3012105-0014<br>' +
+    '\u6771\u4EAC\u90FD\u6E2F\u533A\u829D2-3-31<br>' +
+    '\u677E\u6751\u30D3\u30EB 2F<br><br>' +
+    '<a href="mailto:info@alllign.com" style="color:#6F9424;text-decoration:none;">info@alllign.com</a>' +
+    '</div>';
+
+  var infoWindow = new google.maps.InfoWindow({content: infoContent});
+  marker.addListener('click', function() { infoWindow.open(map, marker); });
 };
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer></script>
+<' + '/script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer><' + '/script>
 </body>
 </html>
