@@ -6,45 +6,72 @@
 <title>alllign partners - Map</title>
 <style>
 html, body, #map {
-  margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
-.gm-style .gm-style-iw-c {
-  border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-}
-.gm-style .gm-style-iw-d { overflow: hidden !important; }
-.info-window {
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-  font-size: 13px; padding: 4px 8px; line-height: 1.7; color: #333;
-}
-.info-window strong { font-size: 14px; color: #222; }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <script>
-window.initMap = function() {
-  var styles = JSON.parse('[{"featureType":"administrative","elementType":"all","stylers":[{"saturation":-100}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"all","stylers":[{"saturation":-100},{"lightness":35}]},{"featureType":"landscape.man_made","elementType":"geometry.fill","stylers":[{"color":"#f2f1ef"}]},{"featureType":"landscape.man_made","elementType":"geometry.stroke","stylers":[{"color":"#d5d3cf"}]},{"featureType":"landscape.man_made","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"color":"#b3c48f"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry.fill","stylers":[{"color":"#b3c48f"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"geometry.fill","stylers":[{"color":"#eae8e4"}]},{"featureType":"poi.attraction","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.attraction","elementType":"labels.text.fill","stylers":[{"color":"#7a7a7a"}]},{"featureType":"poi.attraction","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"poi.business","elementType":"geometry.fill","stylers":[{"color":"#eae8e4"}]},{"featureType":"poi.government","elementType":"geometry.fill","stylers":[{"color":"#eae8e4"}]},{"featureType":"poi.government","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.government","elementType":"labels.text.fill","stylers":[{"color":"#7a7a7a"}]},{"featureType":"poi.government","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"poi.medical","elementType":"geometry.fill","stylers":[{"color":"#eae8e4"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#b3c48f"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#6a7d4e"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"poi.place_of_worship","elementType":"geometry.fill","stylers":[{"color":"#eae8e4"}]},{"featureType":"poi.place_of_worship","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text.fill","stylers":[{"color":"#7a7a7a"}]},{"featureType":"poi.place_of_worship","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"poi.school","elementType":"geometry.fill","stylers":[{"color":"#e5e3df"}]},{"featureType":"poi.sports_complex","elementType":"geometry.fill","stylers":[{"color":"#b3c48f"}]},{"featureType":"poi.sports_complex","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"poi.sports_complex","elementType":"labels.text.fill","stylers":[{"color":"#6a7d4e"}]},{"featureType":"poi.sports_complex","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#d8d8d8"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#f2f1ef"},{"weight":3}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"saturation":-100},{"lightness":30}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"#e0deda"}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d0ceca"},{"visibility":"on"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#d5d3cf"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#c8c6c2"},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#c5c3bf"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#b5b3af"},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"transit","elementType":"all","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"transit","elementType":"labels.icon","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.rail","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"transit.station.rail","elementType":"labels.text.fill","stylers":[{"color":"#505050"}]},{"featureType":"transit.station.rail","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":4}]},{"featureType":"transit.station.bus","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3a3a3a"},{"weight":2}]},{"featureType":"transit.line","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"transit.line","elementType":"labels.text.fill","stylers":[{"color":"#505050"}]},{"featureType":"transit.line","elementType":"labels.text.stroke","stylers":[{"color":"#ffffff"},{"weight":3}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#b0ada6"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"off"}]}]');
+function initMap() {
+  var styles = [
+    {featureType:"administrative",elementType:"all",stylers:[{saturation:-100}]},
+    {featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},
+    {featureType:"administrative",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"landscape",elementType:"geometry.fill",stylers:[{color:"#f2f1ef"}]},
+    {featureType:"landscape.man_made",elementType:"geometry.fill",stylers:[{color:"#f2f1ef"}]},
+    {featureType:"landscape.natural",elementType:"geometry.fill",stylers:[{color:"#b3c48f"}]},
+    {featureType:"landscape.natural.terrain",elementType:"geometry.fill",stylers:[{color:"#b3c48f"}]},
+    {featureType:"poi",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"poi.attraction",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.government",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.park",elementType:"geometry.fill",stylers:[{color:"#b3c48f"}]},
+    {featureType:"poi.park",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.place_of_worship",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.sports_complex",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"road",elementType:"labels.text.fill",stylers:[{color:"#d8d8d8"}]},
+    {featureType:"road",elementType:"labels.icon",stylers:[{lightness:30}]},
+    {featureType:"road.highway",elementType:"geometry.fill",stylers:[{color:"#c5c3bf"}]},
+    {featureType:"road.highway",elementType:"geometry.stroke",stylers:[{color:"#b5b3af"}]},
+    {featureType:"road.arterial",elementType:"geometry.fill",stylers:[{color:"#d5d3cf"}]},
+    {featureType:"road.arterial",elementType:"geometry.stroke",stylers:[{color:"#c5c3bf"}]},
+    {featureType:"road.local",elementType:"geometry.fill",stylers:[{color:"#e0deda"}]},
+    {featureType:"road.local",elementType:"geometry.stroke",stylers:[{color:"#d5d3cf"}]},
+    {featureType:"transit.line",elementType:"geometry",stylers:[{color:"#d5d3cf"},{weight:0.5}]},
+    {featureType:"transit.line",elementType:"labels.text.fill",stylers:[{color:"#3a3a3a"}]},
+    {featureType:"transit.line",elementType:"labels.text.stroke",stylers:[{color:"#ffffff"},{weight:2}]},
+    {featureType:"transit.line",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"transit.station.rail",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"transit.station.bus",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"water",elementType:"geometry.fill",stylers:[{color:"#c4dff6"}]},
+    {featureType:"water",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"poi.business",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"poi.medical",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"poi.school_education",elementType:"labels",stylers:[{visibility:"off"}]}
+  ];
 
-  var map = new google.maps.Map(document.getElementById('map'), {
+  var map = new google.maps.Map(document.getElementById("map"), {
     center: {lat: 35.65487, lng: 139.74498},
     zoom: 16,
+    styles: styles,
     disableDefaultUI: false,
     zoomControl: true,
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: false,
-    gestureHandling: 'cooperative',
+    gestureHandling: "cooperative",
     tilt: 45
   });
 
-  map.setOptions({styles: styles});
-
   var pinIcon = {
     path: google.maps.SymbolPath.CIRCLE,
-    fillColor: '#7BA428',
+    fillColor: "#7BA428",
     fillOpacity: 1,
-    strokeColor: '#5a7a1c',
+    strokeColor: "#5a7a1c",
     strokeWeight: 2,
     scale: 10
   };
@@ -53,21 +80,24 @@ window.initMap = function() {
     position: {lat: 35.65487, lng: 139.74498},
     map: map,
     icon: pinIcon,
-    title: 'alllign partners'
+    title: "alllign partners"
   });
 
-  var infoContent = '<div class="info-window">' +
-    '<strong>alllign partners Inc.</strong><br>' +
-    '\u3012105-0014<br>' +
-    '\u6771\u4EAC\u90FD\u6E2F\u533A\u829D2-3-31<br>' +
-    '\u677E\u6751\u30D3\u30EB 2F<br><br>' +
-    '<a href="mailto:info@alllign.com" style="color:#6F9424;text-decoration:none;">info@alllign.com</a>' +
-    '</div>';
+  var infoContent = '<div style="font-family:sans-serif;font-size:13px;line-height:1.6;padding:4px 0;">'
+    + '<strong style="font-size:14px;">alllign partners</strong><br>'
+    + '\u3012105-0014<br>'
+    + '\u6771\u4EAC\u90FD\u6E2F\u533A\u829D2-3-31<br>'
+    + '\u677E\u6751\u30D3\u30EB 2F'
+    + '<\/div>';
 
   var infoWindow = new google.maps.InfoWindow({content: infoContent});
-  marker.addListener('click', function() { infoWindow.open(map, marker); });
-};
+  infoWindow.open(map, marker);
+
+  marker.addListener("click", function() {
+    infoWindow.open(map, marker);
+  });
+}
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap&v=weekly" async defer></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap&v=weekly"></script>
 </body>
 </html>
