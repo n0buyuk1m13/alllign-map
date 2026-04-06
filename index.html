@@ -19,20 +19,41 @@ html, body, #map {
 <script>
 function initMap() {
   var styles = [
+    // Base: greyscale everything (including playing field turf)
+    {featureType:"all",elementType:"geometry",stylers:[{saturation:"-100"},{lightness:"24"}]},
+    {featureType:"all",elementType:"labels",stylers:[{saturation:"-100"}]},
+    // SITE rules
     {featureType:"administrative",elementType:"all",stylers:[{saturation:"-100"}]},
+    {featureType:"administrative",elementType:"labels",stylers:[{visibility:"off"}]},
     {featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},
-    {featureType:"landscape",elementType:"all",stylers:[{saturation:"-100"},{lightness:"24"},{visibility:"on"}]},
-    {featureType:"landscape.natural",elementType:"geometry",stylers:[{color:"#B5C694"}]},
     {featureType:"poi",elementType:"all",stylers:[{visibility:"simplified"}]},
-    {featureType:"poi.park",elementType:"geometry",stylers:[{color:"#B5C694"}]},
-    {featureType:"poi.sports_complex",elementType:"geometry.fill",stylers:[{color:"#A8B296"}]},
+    {featureType:"poi",elementType:"labels",stylers:[{visibility:"off"}]},
+    {featureType:"poi.attraction",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.government",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.park",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.place_of_worship",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi.sports_complex",elementType:"labels",stylers:[{visibility:"on"}]},
+    {featureType:"poi",elementType:"labels.text.fill",stylers:[{color:"#cccccc"}]},
+    {featureType:"landscape.man_made",elementType:"labels.text.fill",stylers:[{color:"#cccccc"}]},
     {featureType:"road",elementType:"all",stylers:[{saturation:"-100"}]},
+    {featureType:"road",elementType:"labels.text",stylers:[{visibility:"on"}]},
+    {featureType:"road",elementType:"labels.icon",stylers:[{visibility:"on"}]},
     {featureType:"road.highway",elementType:"all",stylers:[{visibility:"simplified"}]},
     {featureType:"road.arterial",elementType:"all",stylers:[{lightness:"30"}]},
     {featureType:"road.local",elementType:"all",stylers:[{lightness:"40"}]},
     {featureType:"transit",elementType:"all",stylers:[{saturation:-100},{visibility:"simplified"}]},
+    {featureType:"transit",elementType:"labels.icon",stylers:[{visibility:"on"}]},
+    {featureType:"transit.line",elementType:"geometry",stylers:[{visibility:"on"},{color:"#808080"}]},
+    {featureType:"transit.station.rail",elementType:"labels.text",stylers:[{visibility:"on"}]},
+    {featureType:"transit.station.rail",elementType:"labels.text.fill",stylers:[{color:"#505050"}]},
+    {featureType:"transit.station.rail",elementType:"labels.text.stroke",stylers:[{color:"#ffffff"},{weight:3}]},
+    {featureType:"transit.station.bus",elementType:"all",stylers:[{visibility:"off"}]},
     {featureType:"water",elementType:"geometry",stylers:[{hue:"#ffff00"},{lightness:-25},{saturation:-97}]},
-    {featureType:"water",elementType:"labels",stylers:[{lightness:-25},{saturation:-100}]}
+    {featureType:"water",elementType:"labels",stylers:[{visibility:"off"}]},
+    // Brand color overrides
+    {featureType:"landscape.natural",elementType:"geometry",stylers:[{color:"#B5C694"}]},
+    {featureType:"poi.park",elementType:"geometry",stylers:[{color:"#B5C694"}]},
+    {featureType:"poi.sports_complex",elementType:"geometry.fill",stylers:[{color:"#A8B296"}]}
   ];
 
   var map = new google.maps.Map(document.getElementById("map"), {
@@ -48,34 +69,39 @@ function initMap() {
     tilt: 45
   });
 
-  var pinIcon = {
-    path: google.maps.SymbolPath.CIRCLE,
-    fillColor: "#7BA428",
-    fillOpacity: 1,
-    strokeColor: "#5a7a1c",
-    strokeWeight: 2,
-    scale: 10
-  };
-
-  var marker = new google.maps.Marker({
-    position: {lat: 35.657956968317, lng: 139.74350855822593},
-    map: map,
-    icon: pinIcon,
-    title: "alllign partners"
-  });
-
   var infoContent = '<div style="font-family:sans-serif;font-size:13px;line-height:1.6;padding:4px 0;">'
     + '<strong style="font-size:14px;">\u30A2\u30E9\u30A4\u30F3\u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</strong><br>'
     + '\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>'
     + 'THE WORKERS & CO 904'
-    + '<\/div>';
+    + '</div>';
 
-  var infoWindow = new google.maps.InfoWindow({content: infoContent});
-  infoWindow.open(map, marker);
-
-  marker.addListener("click", function() {
+  // Logo pin with drop shadow (generated via canvas)
+  var logoImg = new Image();
+  logoImg.crossOrigin = "anonymous";
+  logoImg.onload = function() {
+    var c = document.createElement("canvas");
+    c.width = 230; c.height = 230;
+    var ctx = c.getContext("2d");
+    ctx.shadowColor = "rgba(0,0,0,0.6)";
+    ctx.shadowBlur = 24;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 14;
+    ctx.drawImage(logoImg, 17, 6, 196, 196);
+    var marker = new google.maps.Marker({
+      position: {lat: 35.657956968317, lng: 139.74350855822593},
+      map: map,
+      icon: {
+        url: c.toDataURL("image/png"),
+        scaledSize: new google.maps.Size(66, 66),
+        anchor: new google.maps.Point(33, 30)
+      },
+      title: "alllign partners"
+    });
+    var infoWindow = new google.maps.InfoWindow({content: infoContent});
     infoWindow.open(map, marker);
-  });
+    marker.addListener("click", function() { infoWindow.open(map, marker); });
+  };
+  logoImg.src = "logo.png";
 }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap&v=weekly"></script>
