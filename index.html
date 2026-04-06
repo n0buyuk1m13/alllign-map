@@ -36,23 +36,16 @@ html, body, #map {
 <div id="map"></div>
 <script>
 window.initMap = function() {
-  // Based on Snazzy Maps "SITE" (grey + green parks)
-  // Fine-tuned to align with brand color #6F9424 (olive green)
   var styles = [
-    // Administrative: desaturated, province borders hidden
     {featureType: 'administrative', elementType: 'all', stylers: [{saturation: -100}]},
     {featureType: 'administrative.province', elementType: 'all', stylers: [{visibility: 'off'}]},
     {featureType: 'administrative', elementType: 'labels', stylers: [{visibility: 'off'}]},
-
-    // Landscape: warm grey base with olive-tinted naturals
     {featureType: 'landscape', elementType: 'all', stylers: [{saturation: -80}, {lightness: 24}]},
     {featureType: 'landscape.man_made', elementType: 'geometry.fill', stylers: [{color: '#e4e2df'}]},
     {featureType: 'landscape.man_made', elementType: 'geometry.stroke', stylers: [{color: '#cac8c5'}]},
     {featureType: 'landscape.man_made', elementType: 'labels', stylers: [{visibility: 'off'}]},
     {featureType: 'landscape.natural.landcover', elementType: 'geometry.fill', stylers: [{color: '#b8c99a'}]},
     {featureType: 'landscape.natural.terrain', elementType: 'geometry.fill', stylers: [{color: '#c5d4a8'}]},
-
-    // POI: labels hidden, buildings warm grey, parks olive green
     {featureType: 'poi', elementType: 'labels', stylers: [{visibility: 'off'}]},
     {featureType: 'poi.attraction', elementType: 'geometry.fill', stylers: [{color: '#e0ded9'}]},
     {featureType: 'poi.business', elementType: 'geometry.fill', stylers: [{color: '#e0ded9'}]},
@@ -62,8 +55,6 @@ window.initMap = function() {
     {featureType: 'poi.place_of_worship', elementType: 'geometry.fill', stylers: [{color: '#e0ded9'}]},
     {featureType: 'poi.school', elementType: 'geometry.fill', stylers: [{color: '#dddbd6'}]},
     {featureType: 'poi.sports_complex', elementType: 'geometry.fill', stylers: [{color: '#c5d4a8'}]},
-
-    // Roads: desaturated, clean white fills
     {featureType: 'road', elementType: 'all', stylers: [{saturation: -100}]},
     {featureType: 'road', elementType: 'geometry.fill', stylers: [{color: '#ffffff'}]},
     {featureType: 'road', elementType: 'geometry.stroke', stylers: [{visibility: 'off'}]},
@@ -72,8 +63,6 @@ window.initMap = function() {
     {featureType: 'road.highway', elementType: 'all', stylers: [{visibility: 'simplified'}]},
     {featureType: 'road.arterial', elementType: 'all', stylers: [{lightness: 30}]},
     {featureType: 'road.local', elementType: 'all', stylers: [{lightness: 40}]},
-
-    // Transit: desaturated, rail station names visible
     {featureType: 'transit', elementType: 'all', stylers: [{saturation: -100}, {visibility: 'simplified'}]},
     {featureType: 'transit', elementType: 'labels.icon', stylers: [{visibility: 'on'}]},
     {featureType: 'transit.station.rail', elementType: 'labels.text', stylers: [{visibility: 'on'}]},
@@ -81,59 +70,32 @@ window.initMap = function() {
     {featureType: 'transit.station.rail', elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}, {weight: 4}]},
     {featureType: 'transit.station.bus', elementType: 'all', stylers: [{visibility: 'off'}]},
     {featureType: 'transit.line', elementType: 'geometry', stylers: [{color: '#c5c3c0'}]},
-
-    // Water: olive-tinted warm grey
     {featureType: 'water', elementType: 'geometry', stylers: [{color: '#b0ada6'}]},
     {featureType: 'water', elementType: 'labels', stylers: [{visibility: 'off'}]}
   ];
-
   var position = {lat: 35.6580725, lng: 139.7434576};
-
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: position,
-    zoom: 16,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: false,
-    zoomControl: true,
-    gestureHandling: 'greedy',
-    styles: styles
+    center: position, zoom: 16,
+    mapTypeControl: false, streetViewControl: false,
+    fullscreenControl: false, zoomControl: true,
+    gestureHandling: 'greedy', styles: styles
   });
-
-  // Custom amber pin SVG
   var pinSvg = 'data:image/svg+xml,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36">' +
     '<path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="#E89B00"/>' +
-    '<circle cx="12" cy="12" r="4" fill="#fff"/>' +
-    '</svg>'
+    '<circle cx="12" cy="12" r="4" fill="#fff"/></svg>'
   );
-
   var marker = new google.maps.Marker({
-    position: position,
-    map: map,
-    title: 'alllign partners',
-    icon: {
-      url: pinSvg,
-      scaledSize: new google.maps.Size(36, 54),
-      anchor: new google.maps.Point(18, 54)
-    }
+    position: position, map: map, title: 'alllign partners',
+    icon: {url: pinSvg, scaledSize: new google.maps.Size(36, 54), anchor: new google.maps.Point(18, 54)}
   });
-
   var infoWindow = new google.maps.InfoWindow({
-    content: '<div class="info-window">' +
-      '<strong>ã¢ã©ã¤ã³ ãã¼ããã¼ãºååä¼ç¤¾</strong><br>' +
-      'æ±äº¬é½æ¸¯åºæ±éº»å¸1-4-2<br>' +
-      'THE WORKERS &amp; CO 904' +
-      '</div>'
+    content: '<div class="info-window"><strong>\u30A2\u30E9\u30A4\u30F3 \u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</strong><br>\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>THE WORKERS &amp; CO 904</div>'
   });
-
-  marker.addListener('click', function() {
-    infoWindow.open(map, marker);
-  });
-
+  marker.addListener('click', function(){infoWindow.open(map, marker)});
   infoWindow.open(map, marker);
 };
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer></script>
+<\/script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer><\/script>
 </body>
 </html>
