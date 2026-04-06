@@ -29,7 +29,9 @@ function initMap() {
     {featureType:"road.local",elementType:"all",stylers:[{lightness:"40"}]},
     {featureType:"transit",elementType:"all",stylers:[{saturation:-100},{visibility:"simplified"}]},
     {featureType:"water",elementType:"geometry",stylers:[{hue:"#ffff00"},{lightness:-25},{saturation:-97}]},
-    {featureType:"water",elementType:"labels",stylers:[{lightness:-25},{saturation:-100}]}
+    {featureType:"water",elementType:"labels",stylers:[{lightness:-25},{saturation:-100}]},
+    {featureType:"landscape.natural",elementType:"geometry",stylers:[{color:"#B5C694"}]},
+    {featureType:"poi.park",elementType:"geometry",stylers:[{color:"#91B549"}]}
   ];
 
   var map = new google.maps.Map(document.getElementById("map"), {
