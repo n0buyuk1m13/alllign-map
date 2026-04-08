@@ -16,7 +16,7 @@ html, body, #map {
 </head>
 <body>
 <div id="map"></div>
-<script>h
+<script>
 function initMap() {
   var styles = [
     // Base: greyscale everything (including playing field turf)
@@ -32,7 +32,7 @@ function initMap() {
     {featureType:"poi.government",elementType:"labels",stylers:[{visibility:"on"}]},
     {featureType:"poi.park",elementType:"labels",stylers:[{visibility:"on"}]},
     {featureType:"poi.place_of_worship",elementType:"labels",stylers:[{visibility:"on"}]},
-    {featureType:"poi.sports_complex",elementType:"labels",stylers:[{visibhility:"on"}]},
+    {featureType:"poi.sports_complex",elementType:"labels",stylers:[{visibility:"on"}]},
     {featureType:"poi",elementType:"labels.text.fill",stylers:[{color:"#808080"}]},
     {featureType:"landscape.man_made",elementType:"labels.text.fill",stylers:[{color:"#808080"}]},
     {featureType:"road",elementType:"all",stylers:[{saturation:"-100"}]},
@@ -57,6 +57,8 @@ function initMap() {
   ];
 
 
+
+
   var map = new google.maps.Map(document.getElementById("map"), {
     center: {lat: 35.657956968317, lng: 139.74350855822593},
     zoom: 16,
@@ -71,7 +73,7 @@ function initMap() {
   });
 
 
+
+
   var infoContent = '<div style="font-family:sans-serif;font-size:13px;line-height:1.6;padding:4px 0;">'
     + '<strong style="font-size:14px;">\u30A2\u30E9\u30A4\u30F3\u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</strong><br>'
-    + '\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>'
-    + 'THE WORKERS & CO 904'
