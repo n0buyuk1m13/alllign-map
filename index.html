@@ -2,27 +2,53 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>alllign partners - Map</title>
 <style>
-html, body, #map {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden}
+  #map{width:100%;height:100%}
+  .custom-tooltip{
+    position:absolute;
+    background:#fff;
+    padding:14px 18px 14px 16px;
+    min-width:210px;
+    border-left:3px solid #506b1a;
+    box-shadow:0 1px 12px rgba(0,0,0,0.07);
+    font-family:'Helvetica Neue','Noto Sans JP',sans-serif;
+    pointer-events:auto;
+    cursor:default;
+    transform:translate(-100%,-50%);
+    margin-left:-28px;
+  }
+  .custom-tooltip::after{
+    content:'';position:absolute;right:-7px;top:50%;
+    transform:translateY(-50%) rotate(45deg);
+    width:14px;height:14px;background:#fff;
+    box-shadow:2px -2px 4px rgba(0,0,0,0.04);
+  }
+  .custom-tooltip .tt-close{
+    position:absolute;top:6px;right:8px;
+    font-size:15px;color:#bbb;cursor:pointer;
+    line-height:1;padding:2px 4px;
+    transition:color 0.2s;
+  }
+  .custom-tooltip .tt-close:hover{color:#666;}
+  .custom-tooltip .tt-name{
+    font-size:12.5px;font-weight:600;color:#506b1a;
+    letter-spacing:0.03em;margin-bottom:4px;
+  }
+  .custom-tooltip .tt-addr{
+    font-size:10.5px;color:#999;line-height:1.65;letter-spacing:0.01em;
+  }
 </style>
 </head>
 <body>
 <div id="map"></div>
 <script>
-function initMap() {
-  var styles = [
-    // Base: greyscale everything (including playing field turf)
+function initMap(){
+  var styles=[
     {featureType:"all",elementType:"geometry",stylers:[{saturation:"-100"},{lightness:"24"}]},
     {featureType:"all",elementType:"labels",stylers:[{saturation:"-100"}]},
-    // SITE rules
     {featureType:"administrative",elementType:"all",stylers:[{saturation:"-100"}]},
     {featureType:"administrative",elementType:"labels",stylers:[{visibility:"off"}]},
     {featureType:"administrative.province",elementType:"all",stylers:[{visibility:"off"}]},
@@ -50,60 +76,100 @@ function initMap() {
     {featureType:"transit.station.bus",elementType:"all",stylers:[{visibility:"off"}]},
     {featureType:"water",elementType:"geometry",stylers:[{hue:"#ffff00"},{lightness:-25},{saturation:-97}]},
     {featureType:"water",elementType:"labels",stylers:[{visibility:"off"}]},
-    // Brand color overrides
     {featureType:"landscape.natural",elementType:"geometry",stylers:[{color:"#B5C694"}]},
     {featureType:"poi.park",elementType:"geometry",stylers:[{color:"#B5C694"}]},
     {featureType:"poi.sports_complex",elementType:"geometry.fill",stylers:[{color:"#A8B296"}]}
   ];
 
-  var map = new google.maps.Map(document.getElementById("map"), {
-    center: {lat: 35.657956968317, lng: 139.74350855822593},
-    zoom: 16,
-    styles: styles,
-    disableDefaultUI: false,
-    zoomControl: true,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: false,
-    gestureHandling: "cooperative",
-    tilt: 45
+  var pos={lat:35.657956968317,lng:139.74350855822593};
+
+  var map=new google.maps.Map(document.getElementById("map"),{
+    center:pos,
+    zoom:15.4,
+    styles:styles,
+    disableDefaultUI:false,
+    zoomControl:true,
+    mapTypeControl:false,
+    streetViewControl:false,
+    fullscreenControl:false,
+    gestureHandling:"cooperative",
+    tilt:45
   });
 
-  var infoContent = '<div style="font-family:sans-serif;font-size:13px;line-height:1.6;padding:4px 0;">'
-    + '<strong style="font-size:14px;">\u30A2\u30E9\u30A4\u30F3\u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</strong><br>'
-    + '\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>'
-    + 'THE WORKERS & CO 904'
-    + '</div>';
+  // Logo pin
+  var logoImg=new Image();
+  logoImg.crossOrigin="anonymous";
+  logoImg.onload=function(){
+    var c=document.createElement("canvas");
+    c.width=230;c.height=230;
+    var ctx=c.getContext("2d");
+    ctx.shadowColor="rgba(0,0,0,0.6)";
+    ctx.shadowBlur=24;
+    ctx.shadowOffsetX=0;
+    ctx.shadowOffsetY=14;
+    ctx.drawImage(logoImg,17,6,196,196);
 
-  // Logo pin with drop shadow (generated via canvas)
-  var logoImg = new Image();
-  logoImg.crossOrigin = "anonymous";
-  logoImg.onload = function() {
-    var c = document.createElement("canvas");
-    c.width = 230; c.height = 230;
-    var ctx = c.getContext("2d");
-    ctx.shadowColor = "rgba(0,0,0,0.6)";
-    ctx.shadowBlur = 24;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 14;
-    ctx.drawImage(logoImg, 17, 6, 196, 196);
-    var marker = new google.maps.Marker({
-      position: {lat: 35.657956968317, lng: 139.74350855822593},
-      map: map,
-      icon: {
-        url: c.toDataURL("image/png"),
-        scaledSize: new google.maps.Size(66, 66),
-        anchor: new google.maps.Point(33, 30)
+    var marker=new google.maps.Marker({
+      position:pos,
+      map:map,
+      icon:{
+        url:c.toDataURL("image/png"),
+        scaledSize:new google.maps.Size(66,66),
+        anchor:new google.maps.Point(33,30)
       },
-      title: "alllign partners"
+      title:"alllign partners"
     });
-    var infoWindow = new google.maps.InfoWindow({content: infoContent});
-    infoWindow.open(map, marker);
-    marker.addListener("click", function() { infoWindow.open(map, marker); });
+
+    // Custom overlay tooltip (left side of pin)
+    var TooltipOverlay=function(map,marker){
+      this.map_=map;
+      this.marker_=marker;
+      this.div_=null;
+      this.setMap(map);
+    };
+    TooltipOverlay.prototype=new google.maps.OverlayView();
+
+    TooltipOverlay.prototype.onAdd=function(){
+      var div=document.createElement("div");
+      div.className="custom-tooltip";
+      div.innerHTML=
+        '<div class="tt-close">\u00D7</div>'+
+        '<div class="tt-name">\u30A2\u30E9\u30A4\u30F3\u30D1\u30FC\u30C8\u30CA\u30FC\u30BA\u5408\u540C\u4F1A\u793E</div>'+
+        '<div class="tt-addr">\u6771\u4EAC\u90FD\u6E2F\u533A\u6771\u9EBB\u5E031-4-2<br>THE WORKERS &amp; CO 904</div>';
+      var self=this;
+      div.querySelector('.tt-close').addEventListener('click',function(){
+        self.setMap(null);
+      });
+      // Re-open on marker click
+      marker.addListener('click',function(){
+        if(!self.map_||!self.getMap()){self.setMap(map);}
+      });
+      this.div_=div;
+      var panes=this.getPanes();
+      panes.floatPane.appendChild(div);
+    };
+
+    TooltipOverlay.prototype.draw=function(){
+      var proj=this.getProjection();
+      var point=proj.fromLatLngToDivPixel(this.marker_.getPosition());
+      if(this.div_){
+        this.div_.style.left=point.x+"px";
+        this.div_.style.top=point.y+"px";
+      }
+    };
+
+    TooltipOverlay.prototype.onRemove=function(){
+      if(this.div_){
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_=null;
+      }
+    };
+
+    new TooltipOverlay(map,marker);
   };
-  logoImg.src = "logo.png";
+  logoImg.src="logo.png";
 }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap&v=weekly"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAapkxdk75Z8C47cNn0vuXLlXyZGzoAX0A&callback=initMap" async defer></script>
 </body>
 </html>
