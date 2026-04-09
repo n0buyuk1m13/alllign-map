@@ -13,7 +13,7 @@
     padding:14px 18px 14px 16px;
     min-width:210px;
     border-left:3px solid #506b1a;
-    box-shadow:0 1px 12px rgba(0,0,0,0.07);
+    box-shadow:0 2px 16px rgba(0,0,0,0.15), 0 0 4px rgba(0,0,0,0.06);
     font-family:'Helvetica Neue','Noto Sans JP',sans-serif;
     pointer-events:auto;
     cursor:default;
@@ -84,8 +84,8 @@ function initMap(){
   var pos={lat:35.657956968317,lng:139.74350855822593};
 
   var map=new google.maps.Map(document.getElementById("map"),{
-    center:pos,
-    zoom:15.4,
+    center:{lat:35.661,lng:139.7455},
+    zoom:15,
     styles:styles,
     disableDefaultUI:false,
     zoomControl:true,
